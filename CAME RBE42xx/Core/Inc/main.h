@@ -89,6 +89,8 @@ void Error_Handler(void);
 #define _7seg_g_GPIO_Port GPIOB
 #define _7seg_dp_Pin GPIO_PIN_7
 #define _7seg_dp_GPIO_Port GPIOB
+#define DATA_TDA5200_Pin GPIO_PIN_8
+#define DATA_TDA5200_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
