@@ -151,12 +151,12 @@ int main(void)
 	uint32_t adc2_value = HAL_ADC_GetValue(&hadc2);
 
 	if (adc2_value < 1000){
-			HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_RESET);
-			HAL_Delay(1000);
+		HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_RESET);
+		HAL_Delay(1000);
 	}
 
 	else if (adc1_value < 1000){
@@ -168,21 +168,21 @@ int main(void)
 		HAL_Delay(1000);
 	}
 	else if (adc2_value > 2000){
-			HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_RESET);
-			HAL_Delay(1000);
+		HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_RESET);
+		HAL_Delay(1000);
 	}
 	else if (adc1_value > 2000){
-			HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_RESET);
-			HAL_Delay(1000);
-		}
+		HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_RESET);
+		HAL_Delay(1000);
+	}
 
   }
   /* USER CODE END 3 */
