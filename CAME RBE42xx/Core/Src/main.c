@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "stdbool.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -102,6 +103,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
+	/*
 	HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
@@ -141,6 +144,16 @@ int main(void)
 	HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_RESET);
 	HAL_Delay(1);
+	*/
+
+	HAL_GPIO_WritePin(GPIOB, _7seg_a_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, _7seg_b_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, _7seg_c_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, _7seg_d_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, _7seg_e_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, _7seg_f_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, _7seg_g_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, _7seg_dp_Pin, GPIO_PIN_SET);
 
 	HAL_ADC_Start(&hadc1);
 	HAL_ADC_Start(&hadc2);
@@ -149,6 +162,35 @@ int main(void)
 
 	uint32_t adc1_value = HAL_ADC_GetValue(&hadc1);
 	uint32_t adc2_value = HAL_ADC_GetValue(&hadc2);
+
+	bool rf_data;
+
+	//while (rf_data != 0){
+
+		if (HAL_GPIO_ReadPin(DATA_TDA5200_GPIO_Port, DATA_TDA5200_Pin) == GPIO_PIN_RESET)
+		{rf_data = 0;}
+		else {rf_data = 1;}
+		//HAL_Delay(10);
+		if (rf_data == 0){
+			HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_RESET);
+			//HAL_Delay(10);
+		}
+		else if(rf_data == 1){
+			HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
+			//HAL_Delay(10);
+		}
+
+  	  //}
 
 	if (adc2_value < 1000){
 		HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
