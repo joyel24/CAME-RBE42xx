@@ -216,6 +216,14 @@ int main(void)
 			HAL_TIM_Base_Stop_IT(&htim3); //Timer 3 stop
 			if (currentBit >= 99) {currentBit = 0;}
 
+			if ( (boolArray[58] == 0) && (boolArray[57] == 0) && (boolArray[56] == 0) && (boolArray[55] == 1) && (boolArray[54] == 1) && (boolArray[53] == 0) && (boolArray[52] == 1) && (boolArray[51] == 1) && (boolArray[50] == 1)  )
+			{
+				for (int i=0; i<65; i++)
+				{
+					printf("%d", boolArray[i]);
+				}
+				printf("\n");
+			}
 		}
 		//boolArray;
 
@@ -242,7 +250,7 @@ int main(void)
 		HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_RESET);
-		printf("Hello World!\n");
+		//printf("Hello World!\n");
 		HAL_Delay(100);
 	}
 
