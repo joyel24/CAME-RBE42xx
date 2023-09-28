@@ -218,11 +218,13 @@ int main(void)
 
 			if ( (boolArray[58] == 0) && (boolArray[57] == 0) && (boolArray[56] == 0) && (boolArray[55] == 1) && (boolArray[54] == 1) && (boolArray[53] == 0) && (boolArray[52] == 1) && (boolArray[51] == 1) && (boolArray[50] == 1)  )
 			{
+				HAL_GPIO_TogglePin(Relay1_GPIO_Port, Relay1_Pin);
 				for (int i=0; i<65; i++)
 				{
 					printf("%d", boolArray[i]);
 				}
 				printf("\n");
+				HAL_Delay(800);
 			}
 		}
 		//boolArray;
