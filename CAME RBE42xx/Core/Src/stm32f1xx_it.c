@@ -22,6 +22,7 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "stdbool.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,7 +58,8 @@
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim3;
 /* USER CODE BEGIN EV */
-
+extern bool boolArray[];
+extern int currentBit;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -209,6 +211,20 @@ void TIM3_IRQHandler(void)
   HAL_TIM_IRQHandler(&htim3);
   /* USER CODE BEGIN TIM3_IRQn 1 */
 
+	HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
+	if (HAL_GPIO_ReadPin(DATA_TDA5200_GPIO_Port, DATA_TDA5200_Pin) == GPIO_PIN_RESET) {
+		boolArray[currentBit] = false;
+		HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_RESET);
+	}
+	else {
+		boolArray[currentBit] = true;
+		HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_RESET);
+	}
+
+	currentBit++;
   /* USER CODE END TIM3_IRQn 1 */
 }
 

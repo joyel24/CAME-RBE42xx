@@ -75,6 +75,10 @@ void Error_Handler(void);
 #define _7seg_b_GPIO_Port GPIOB
 #define _7seg_c_Pin GPIO_PIN_2
 #define _7seg_c_GPIO_Port GPIOB
+#define EEPROM_SCL_Pin GPIO_PIN_10
+#define EEPROM_SCL_GPIO_Port GPIOB
+#define EEPROM_SDA_Pin GPIO_PIN_11
+#define EEPROM_SDA_GPIO_Port GPIOB
 #define Relay2_Pin GPIO_PIN_12
 #define Relay2_GPIO_Port GPIOB
 #define Relay1_Pin GPIO_PIN_13

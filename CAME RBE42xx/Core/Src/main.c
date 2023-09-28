@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stdbool.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,7 +45,12 @@ ADC_HandleTypeDef hadc2;
 
 TIM_HandleTypeDef htim3;
 
+UART_HandleTypeDef huart2;
+
 /* USER CODE BEGIN PV */
+
+int currentBit=0;
+bool boolArray[];
 
 /* USER CODE END PV */
 
@@ -55,12 +60,40 @@ static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_ADC2_Init(void);
 static void MX_TIM3_Init(void);
+static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
+
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+void TIM3_test(){
+	//for (int a=1; a<20; a++){
+
+
+		//int delai=100;
+		//HAL_GPIO_WritePin(TXDATA_GPIO_Port, TXDATA_Pin, GPIO_PIN_SET);
+		//HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+
+		//printf(htim22.Instance->CNT);
+		//int test = htim22.Instance->CNT;
+
+		//sprintf(UartBuffOut, "test");
+		//HAL_UART_Transmit(&huart1, UartBuffOut, strlen(UartBuffOut), 1000);
+
+		//printf("test");
+		//sprintf("test2");
+		//HAL_GPIO_WritePin(TXDATA_GPIO_Port, TXDATA_Pin, GPIO_PIN_RESET);
+		//HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+
+	//}
+
+}
+
+bool boolArray[99];
 
 /* USER CODE END 0 */
 
@@ -95,7 +128,9 @@ int main(void)
   MX_ADC1_Init();
   MX_ADC2_Init();
   MX_TIM3_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+
 
   /* USER CODE END 2 */
 
@@ -170,21 +205,26 @@ int main(void)
 
 	//while (rf_data != 0){
 
-		if (HAL_GPIO_ReadPin(DATA_TDA5200_GPIO_Port, DATA_TDA5200_Pin) == GPIO_PIN_RESET)
-		{rf_data = 0;}
-		else {rf_data = 1;}
-		//HAL_Delay(10);
-		if (rf_data == 0){
-			HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_RESET);
-			//HAL_Delay(10);
+		if (HAL_GPIO_ReadPin(DATA_TDA5200_GPIO_Port, DATA_TDA5200_Pin) == GPIO_PIN_RESET) {
+			if (HAL_TIM_Base_Start_IT(&htim3) != HAL_OK) //Timer 3 start
+			{
+			/* Starting Error */
+			Error_Handler();
+			}
+			while (currentBit < 100) {} //wait
+
+			HAL_TIM_Base_Stop_IT(&htim3); //Timer 3 stop
+			if (currentBit >= 99) {currentBit = 0;}
+
 		}
+		//boolArray;
+
+
+		/*int __io_putchar(int ch) {
+		    ITM_SendChar(ch);
+		    return ch;
+		}*/
+		/*
 		else if(rf_data == 1){
 			HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_SET);
@@ -192,16 +232,18 @@ int main(void)
 			HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
 			//HAL_Delay(10);
 		}
+		*/
 
   	  //}
 
-	if (adc2_value < 1000){
+		if (adc2_value < 1000){
 		HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_RESET);
-		HAL_Delay(1000);
+		printf("Hello World!\n");
+		HAL_Delay(100);
 	}
 
 	else if (adc1_value < 1000){
@@ -210,7 +252,7 @@ int main(void)
 		HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, digit_dis_2_Pin, GPIO_PIN_RESET);
-		HAL_Delay(1000);
+		HAL_Delay(100);
 	}
 	else if (adc2_value > 2000){
 		HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
@@ -218,7 +260,7 @@ int main(void)
 		HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_RESET);
-		HAL_Delay(1000);
+		HAL_Delay(100);
 	}
 	else if (adc1_value > 2000){
 		HAL_GPIO_WritePin(GPIOA, digit_dis_1_Pin, GPIO_PIN_SET);
@@ -226,7 +268,7 @@ int main(void)
 		HAL_GPIO_WritePin(GPIOA, digit_dis_3_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, digit_dis_4_Pin, GPIO_PIN_RESET);
-		HAL_Delay(1000);
+		HAL_Delay(100);
 	}
 
   }
@@ -416,6 +458,39 @@ static void MX_TIM3_Init(void)
 }
 
 /**
+  * @brief USART2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART2_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART2_Init 0 */
+
+  /* USER CODE END USART2_Init 0 */
+
+  /* USER CODE BEGIN USART2_Init 1 */
+
+  /* USER CODE END USART2_Init 1 */
+  huart2.Instance = USART2;
+  huart2.Init.BaudRate = 115200;
+  huart2.Init.WordLength = UART_WORDLENGTH_8B;
+  huart2.Init.StopBits = UART_STOPBITS_1;
+  huart2.Init.Parity = UART_PARITY_NONE;
+  huart2.Init.Mode = UART_MODE_TX_RX;
+  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_HalfDuplex_Init(&huart2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART2_Init 2 */
+
+  /* USER CODE END USART2_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -456,17 +531,23 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : _7seg_a_Pin _7seg_b_Pin _7seg_c_Pin _7seg_d_Pin
-                           _7seg_e_Pin _7seg_f_Pin _7seg_g_Pin _7seg_dp_Pin */
-  GPIO_InitStruct.Pin = _7seg_a_Pin|_7seg_b_Pin|_7seg_c_Pin|_7seg_d_Pin
-                          |_7seg_e_Pin|_7seg_f_Pin|_7seg_g_Pin|_7seg_dp_Pin;
+  /*Configure GPIO pins : _7seg_a_Pin _7seg_b_Pin _7seg_c_Pin _7seg_e_Pin
+                           _7seg_f_Pin _7seg_g_Pin _7seg_dp_Pin */
+  GPIO_InitStruct.Pin = _7seg_a_Pin|_7seg_b_Pin|_7seg_c_Pin|_7seg_e_Pin
+                          |_7seg_f_Pin|_7seg_g_Pin|_7seg_dp_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Relay2_Pin Relay1_Pin */
-  GPIO_InitStruct.Pin = Relay2_Pin|Relay1_Pin;
+  /*Configure GPIO pins : EEPROM_SCL_Pin EEPROM_SDA_Pin */
+  GPIO_InitStruct.Pin = EEPROM_SCL_Pin|EEPROM_SDA_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : Relay2_Pin Relay1_Pin _7seg_d_Pin */
+  GPIO_InitStruct.Pin = Relay2_Pin|Relay1_Pin|_7seg_d_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -483,6 +564,14 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+PUTCHAR_PROTOTYPE{
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the USART1 and Loop until the end of transmission */
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+
+  return ch;
+}
 
 /* USER CODE END 4 */
 
